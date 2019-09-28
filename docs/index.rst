@@ -44,6 +44,13 @@ just set ``BASIC_AUTH_FORCE`` configuration variable to `True`::
 You might find this useful, for example, if you would like to protect your
 staging server from uninvited guests.
 
+Change to the following to allow for multiple users::
+    app.config['BASIC_AUTH_USERS'] = [
+      {'USERNAME': 'john', 'PASSWORD': 'matrix'},
+      {'USERNAME': 'homer', 'PASSWORD': 'simpson'},
+      {'USERNAME': 'alan', 'PASSWORD': 'turing'},
+    ]
+
 .. warning::
 
    Please make sure that you use SSL/TLS (HTTPS) to encrypt the connection
@@ -79,6 +86,13 @@ A list of configuration keys currently understood by the extension:
 
     You can override :meth:`BasicAuth.check_credentials <flask.ext.basicauth.BasicAuth.check_credentials>`,
     if you need a different authentication logic for your application.
+
+``BASIC_AUTH_USERS``
+    Optionally, a list of dictionaries with ``USERNAME`` and ``PASSWORD`` keys that grant access for the
+    client to the protected resource.
+
+    Both ``BASIC_AUTH_USERNAME`` and ``BASIC_AUTH_USERS`` are checked if existing and then processed
+    accordingly.
 
 
 API reference

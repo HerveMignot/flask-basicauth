@@ -56,16 +56,29 @@ class BasicAuth(object):
 
         By default compares the given username and password to
         ``BASIC_AUTH_USERNAME`` and ``BASIC_AUTH_PASSWORD``
-        configuration variables.
+        configuration variables or to a list of users in
+        ``BASIC_AUTH_USERS`` (list of dictionaries USERNAME and PASSWORD).
 
         :param username: a username provided by the client
         :param password: a password provided by the client
         :returns: `True` if the username and password combination was correct,
             and `False` otherwise.
         """
-        correct_username = current_app.config['BASIC_AUTH_USERNAME']
-        correct_password = current_app.config['BASIC_AUTH_PASSWORD']
-        return username == correct_username and password == correct_password
+
+        if 'BASIC_AUTH_USERNAME' in current_app.config:
+            correct_username = current_app.config['BASIC_AUTH_USERNAME']
+            correct_password = current_app.config['BASIC_AUTH_PASSWORD']
+            if username == correct_username and password == correct_password:
+                return True
+
+        if 'BASIC_AUTH_USERS' in current_app.config:
+            for login in current_app.config['BASIC_AUTH_USERS']:
+                correct_username = login['USERNAME']
+                correct_password = login['PASSWORD']
+                if username == correct_username and password == correct_password:
+                    return True
+
+        return False
 
     def authenticate(self):
         """
