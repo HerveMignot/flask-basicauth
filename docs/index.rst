@@ -44,12 +44,18 @@ just set ``BASIC_AUTH_FORCE`` configuration variable to `True`::
 You might find this useful, for example, if you would like to protect your
 staging server from uninvited guests.
 
-Change to the following to allow for multiple users::
+To allow for multiple users, initialize ``app.config`` with a list of username & password dictionaries::
+
+    app = Flask(__name__)
+
     app.config['BASIC_AUTH_USERS'] = [
       {'USERNAME': 'john', 'PASSWORD': 'matrix'},
       {'USERNAME': 'homer', 'PASSWORD': 'simpson'},
       {'USERNAME': 'alan', 'PASSWORD': 'turing'},
     ]
+
+    basic_auth = BasicAuth(app)
+
 
 .. warning::
 
