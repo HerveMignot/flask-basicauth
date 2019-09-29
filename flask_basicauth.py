@@ -85,9 +85,6 @@ class BasicAuth(object):
 
         return False
 
-        return username_matched and password_matched
-
-
 
     def authenticate(self):
         """
